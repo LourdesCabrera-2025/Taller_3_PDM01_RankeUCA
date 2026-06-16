@@ -1,5 +1,6 @@
 package com.pdm0126.rankeuca
 
+import android.app.Application
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -17,7 +18,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.pdm0126.rankeuca.data.AppProvider
 import com.pdm0126.rankeuca.screens.HomeScreen
+import com.pdm0126.rankeuca.screens.OptionScreen
 import com.pdm0126.rankeuca.screens.ResultScreen
 import com.pdm0126.rankeuca.ui.theme.RankeUCATheme
 
@@ -33,9 +36,16 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    var currentScreen by remember { mutableStateOf("home") }
+                    var currentScreen by remember { mutableStateOf("options") }
 
                     when(currentScreen) {
+                        "options" -> {
+                            OptionScreen(
+                                onNavigateTovoting = {
+                                    currentScreen = "home"
+                                }
+                            )
+                        }
                         "home" ->{
                             HomeScreen(
                                 onNaigateToResults = {
@@ -55,6 +65,10 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+}
+
+class Taller3RankeUca : Application() {
+    val appProvider by lazy { AppProvider(this) }
 }
 
 
